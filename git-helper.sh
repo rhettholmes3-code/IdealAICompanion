@@ -89,7 +89,8 @@ push_code() {
 
     echo -e "正在检查变更..."
     if [[ -z $(git status -s) ]]; then
-        echo -e "${GREEN}✅ 当前没有需要提交的更改。${NC}"
+        echo -e "${GREEN}✅ 当前没有需要提交的新更改。${NC}"
+        echo -e "正在尝试推送已提交的代码..."
     else
         echo -e "${YELLOW}发现以下文件有变动:${NC}"
         git status -s
@@ -102,15 +103,15 @@ push_code() {
         echo -e "\n📦 正在打包..."
         git add .
         git commit -m "$commit_msg"
-        
-        echo -e "🚀 正在推送..."
-        git push
-        
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}✅ 推送成功！${NC}"
-        else
-            echo -e "${RED}❌ 推送失败。可能需要先拉取最新代码 (选择菜单 3)。${NC}"
-        fi
+    fi
+    
+    echo -e "🚀 正在推送..."
+    git push -u origin main
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✅ 推送成功！${NC}"
+    else
+        echo -e "${RED}❌ 推送失败。可能需要先拉取最新代码 (选择菜单 3)。${NC}"
     fi
 
     read -p "按回车键返回菜单..."
