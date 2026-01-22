@@ -48,7 +48,7 @@ export class PersonaManager {
         let initialMemory = '';
         if (!sessionId && userId) {
             // [Updated] Read from MemoryManager
-            const userMemory = memoryManager.getUserMemory(userId, agentId);
+            const userMemory = await memoryManager.getUserMemory(userId, agentId);
             if (userMemory) {
                 // Construct initial state from User Memory
                 // We pass the <target_user> content
@@ -78,7 +78,7 @@ export class PersonaManager {
             const memUpdates: any = {};
 
             // Fetch current memory state for deep merging
-            const currentMemory = memoryManager.getUserMemory(userId, agentId);
+            const currentMemory = await memoryManager.getUserMemory(userId, agentId);
 
             // Handle Target User Profile Merge
             if (updates.memory) {
@@ -123,7 +123,7 @@ export class PersonaManager {
                 memUpdates.relationshipEvolution = typeof relValue === 'string' ? relValue : String(relValue);
             }
 
-            memoryManager.updateUserMemory(userId, agentId, memUpdates);
+            await memoryManager.updateUserMemory(userId, agentId, memUpdates);
         }
 
         // 5. Update Agent Instance (Hot Update) via ZEGO API
@@ -148,7 +148,7 @@ export class PersonaManager {
         let overrides: any = {};
         if (userId) {
             const memoryManager = MemoryManager.getInstance();
-            const userMemory = memoryManager.getUserMemory(userId, agentId);
+            const userMemory = await memoryManager.getUserMemory(userId, agentId);
             if (userMemory) {
                 overrides.TARGET_USER = userMemory.targetUser;
                 overrides.RELATIONSHIP_EVOLUTION = userMemory.relationshipEvolution;

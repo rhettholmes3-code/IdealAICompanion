@@ -5,6 +5,11 @@ import path from 'path';
 
 export type SceneType = 'chat' | 'game' | 'task';
 export type SilenceLevel = 'welcome' | 'short' | 'medium' | 'long';
+export interface SceneContext {
+    currentTime: string;
+    location: string;
+    interactionGoal?: string;
+}
 
 export interface PromptVariables {
     // Dynamic variables

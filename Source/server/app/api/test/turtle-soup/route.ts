@@ -12,13 +12,13 @@ export async function GET() {
 
         // 1. Start Game
         const engine = new GameEngine();
-        const startRes = engine.startGame(roomId, 'turtle_soup');
+        const startRes = await engine.startGame(roomId, 'turtle_soup');
         log(`[Step 1] Start Game: ${JSON.stringify(startRes)}`);
 
         if (!startRes.success) throw new Error('Start failed');
 
         // 2. Check Prompt Variables
-        const gameVars = engine.getGamePromptVariables(roomId);
+        const gameVars = await engine.getGamePromptVariables(roomId);
         log(`[Step 2] Game Vars: TITLE=${gameVars.TITLE}, CONTENT=${gameVars.CONTENT?.substring(0, 30)}...`);
 
         // 3. Simulate Analyze (Mock Bailian to avoid external calls and waiting)
@@ -57,13 +57,13 @@ export async function GET() {
         log(`Analyze Result: ${JSON.stringify(analyzeRes)}`);
 
         // 4. Check Session State after analysis
-        const session = engine.getSession(roomId);
+        const session = await engine.getSession(roomId);
         log(`[Step 4] Session State: progress=${session?.progressScore}, kips=${session?.kipsHit}`);
         log(`Last Analysis: ${JSON.stringify(session?.lastAnalysis)}`);
 
         // 5. Test Hint Strategy (Silence)
         // Since Last Analysis said needs_hint=true, this should return [TTS]...
-        const hintStrategy = engine.getHintStrategy(roomId, 'medium');
+        const hintStrategy = await engine.getHintStrategy(roomId, 'medium');
         log(`[Step 5] Hint Strategy (Medium): "${hintStrategy}"`);
 
         if (!hintStrategy.startsWith('[TTS]')) {

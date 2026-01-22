@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
         // 获取用户记忆 (User Profile + Relationship)
         const memoryManager = MemoryManager.getInstance();
-        const userMemory = memoryManager.getUserMemory(userId, config.id);
+        const userMemory = await memoryManager.getUserMemory(userId, config.id);
 
         // 构造 Prompt 变量覆盖
         const promptOverrides: any = {};
