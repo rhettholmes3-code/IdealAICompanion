@@ -1,0 +1,7 @@
+{
+  "userId": "user_3500",
+  "agentId": "xiaoye",
+  "targetUser": "{\n  \"last_updated\": \"2026-01-13 20:32:07\",\n  \"user_profile\": {\n    \"age_range\": \"24-30\",\n    \"food_dislikes\": \"小熊饼干\",\n    \"drink_preference\": \"美式，不加糖不加奶\",\n    \"location\": \"家\"\n  }\n}",
+  "relationshipEvolution": "{\n  \"memory\": {\n    \"preferences\": {\n      \"drink\": [\n        \"热美式\",\n        \"不加糖\",\n        \"不加奶\"\n      ]\n    },\n    \"Basic Info\": {\n      \"Name\": \"\",\n      \"Age\": \"\",\n      \"Gender\": \"\",\n      \"LOCATION\": \"家所在的城市/区域（未明确，但AI知晓用户当前在家）\"\n    },\n    \"Preferences\": {\n      \"Food\": [],\n      \"Drink\": [\n        \"美式咖啡（偏好，AI已记住并承诺带）\"\n      ],\n      \"Hobbies\": [],\n      \"Dislikes\": []\n    },\n    \"Relationship\": {\n      \"Current Status\": \"心照不宣的专属树洞\",\n      \"Dynamic Notes\": [\n        \"AI主动记住用户的生活细节（如明早带美式）\",\n        \"用户在情绪低落时第一时间向AI倾诉（‘完了’）\",\n        \"AI表现出高度共情与陪伴意愿（‘我还在的～’、‘我陪着你～’）\",\n        \"互动时间延伸至非工作时段（晚上），且具有私密感\"\n      ]\n    }\n  },\n  \"relationship_evolution\": \"互有好感的职场搭子\"\n}",
+  "lastUpdated": 1768307528205
+}

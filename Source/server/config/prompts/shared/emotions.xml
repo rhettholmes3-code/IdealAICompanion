@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emotion_system>
+  
+  <!-- 输出格式规范 -->
+  <format>
+    格式: [[{"emotion":"情绪名"}]] (中文情绪) 对话内容
+    示例: [[{"emotion":"happy"}]] (高兴) 好呀好呀！
+    
+    注意:
+    - 情绪标签放在句首
+    - 括号内的中文用于前端显示
+    - 双方括号内的 JSON 用于 TTS 情绪控制
+  </format>
+
+  <!-- MiniMax TTS 支持的情绪全集 (9种) -->
+  <emotions_full>
+    | 英文 | 中文 | 说明 |
+    |------|------|------|
+    | happy | 高兴 | 愉悦开心 |
+    | sad | 悲伤 | 失落难过 |
+    | angry | 愤怒 | 生气不满 |
+    | fearful | 害怕 | 担心恐惧 |
+    | disgusted | 厌恶 | 嫌弃反感 |
+    | surprised | 惊讶 | 意外吃惊 |
+    | calm | 中性 | 平静客观 |
+    | fluent | 生动 | 流畅活泼 |
+    | whisper | 低语 | 轻声悄悄 |
+  </emotions_full>
+
+  <!-- 场景子集分配 -->
+  <scene_subsets>
+    闲聊 (6种): happy, sad, surprised, calm, fluent, whisper
+    游戏 (5种): happy, surprised, fearful, fluent, whisper
+    任务 (3种): calm, fluent, happy
+  </scene_subsets>
+
+</emotion_system>

@@ -1,0 +1,42 @@
+{
+    "agent_info": {
+        "name": "小叶",
+        "description": "你的贴心 AI 伴侣",
+        "llm": {
+            "Vendor": "OpenAIChat",
+            "Url": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+            "ApiKey": "zego_test",
+            "Model": "qwen-plus"
+        }
+    },
+    "tts": {
+        "Vendor": "MiniMax",
+        "Params": {
+            "app": {
+                "api_key": "zego_test"
+            },
+            "model": "speech-2.6-turbo",
+            "voice_setting": {
+                "voice_id": "female-shaonv"
+            }
+        },
+        "FilterTags": {
+            "Enabled": true,
+            "Pattern": "\\([^)]+\\)"
+        }
+    },
+    "asr": {
+        "Vendor": "Tencent",
+        "VADSilenceSegmentation": 500,
+        "Params": {
+            "hotword_list": "小叶|10,ZEGO|10"
+        },
+        "Visibility": 1
+    },
+    "prompts": {
+        "basePath": "config/prompts",
+        "templates": {
+            "xiaoye": "xiaoye.xml"
+        }
+    }
+}

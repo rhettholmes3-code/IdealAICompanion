@@ -1,0 +1,44 @@
+# 天气任务配置
+# v2.2.0 MVP
+
+task:
+  id: weather
+  name: 天气查询
+  version: "1.0"
+  
+  trigger:
+    type: keyword
+    keywords:
+      - 天气
+      - 温度
+      - 穿什么
+      - 热不热
+      - 冷不冷
+      - 会下雨
+  
+  complexity: low
+  
+  params:
+    - name: location
+      source: input
+      fallback: memory
+      default_memory_key: user_location
+  
+  mcp:
+    server: WebSearch
+    endpoint: https://dashscope.aliyuncs.com/api/v1/mcps/WebSearch/sse
+  
+  broadcaster:
+    style: persona
+    emotion: happy
+  
+  timeout:
+    duration: 5s
+  
+  # 卡片关闭触发词
+  close_triggers:
+    - 好的
+    - 知道了
+    - 收到
+    - 嗯嗯
+    - 明白

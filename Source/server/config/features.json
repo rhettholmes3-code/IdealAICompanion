@@ -1,0 +1,88 @@
+{
+    "version": "1.0.0",
+    "last_updated": "2026-01-08T15:47:41+08:00",
+    "description": "IdealAICompanion 实验性功能配置中心",
+    "features": {
+        "dynamic_scene_context": {
+            "enabled": true,
+            "description": "动态场景推断：根据实际时间和用户画像自动调整场景上下文",
+            "default": false,
+            "config": {
+                "use_user_profile": true,
+                "time_based_inference": true,
+                "weekend_detection": true
+            }
+        },
+        "persona_evolution": {
+            "enabled": true,
+            "description": "用户画像自动学习",
+            "default": true,
+            "config": {
+                "trigger_interval_seconds": 60,
+                "trigger_turn_count": 10,
+                "hot_update_enabled": true,
+                "persist_updates": true
+            }
+        },
+        "emotional_tts": {
+            "enabled": true,
+            "description": "情绪化 TTS 语音合成",
+            "default": true,
+            "config": {
+                "emotion_tags_enabled": true,
+                "supported_emotions": [
+                    "happy",
+                    "sad",
+                    "angry",
+                    "fearful",
+                    "surprised",
+                    "neutral"
+                ]
+            }
+        },
+        "silence_detection": {
+            "enabled": true,
+            "description": "用户沉默检测与主动问候",
+            "default": true,
+            "config": {
+                "short_silence_threshold": 5,
+                "medium_silence_threshold": 15,
+                "long_silence_threshold": 30
+            }
+        },
+        "proactive_topic": {
+            "enabled": true,
+            "description": "主动话题推荐：根据场景和沉默时长推荐话题",
+            "default": true,
+            "config": {
+                "mode": "llm",
+                "inject_scene_context": true,
+                "topic_prompts": {
+                    "short": "用户有点沉默了，请你结合当前场景简单问候或发起一个轻松话题。",
+                    "medium": "用户沉默了一会儿，请你根据场景主动关心用户或推荐一个有趣的话题。",
+                    "long": "用户长时间沉默，请你温柔地确认用户是否还在，或者分享一个暖心的话题。"
+                }
+            }
+        },
+        "response_length_control": {
+            "enabled": true,
+            "description": "回复长度控制（通过 LLM 参数和 Prompt 约束）",
+            "default": true,
+            "config": {
+                "max_tokens": 100,
+                "presence_penalty": 0.3,
+                "frequency_penalty": 0.3
+            }
+        }
+    },
+    "experimental": {
+        "description": "实验性功能，随时可能调整或移除",
+        "features": {
+            "context_aware_response_length": {
+                "enabled": false,
+                "description": "根据上下文动态调整回复长度（未实现）",
+                "default": false
+            }
+        }
+    }
+}

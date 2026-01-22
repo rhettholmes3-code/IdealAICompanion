@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* Custom Utilities */
+.glass-panel {
+  @apply bg-slate-900/60 backdrop-blur-xl border border-white/10;
+}
+
+/* Agent Selection Modal */
+.glass-modal {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 -8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Agent Avatar Glow Ring */
+.avatar-glow {
+  position: relative;
+}
+
+.avatar-glow::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #60A5FA, #A78BFA);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.avatar-glow.active::before {
+  opacity: 0.6;
+  filter: blur(6px);
+}
+
+/* Agent List Item */
+.agent-list-item {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.agent-list-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.agent-list-item.selected {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+/* Modal Animations */
+@keyframes modal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-modal-in {
+  animation: modal-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-backdrop-in {
+  animation: modal-fade-in 0.25s ease forwards;
+}

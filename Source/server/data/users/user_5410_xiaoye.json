@@ -1,0 +1,7 @@
+{
+  "userId": "user_5410",
+  "agentId": "xiaoye",
+  "targetUser": "{\n  \"last_updated\": \"2026-01-15 20:45:57\",\n  \"user_profile\": {\n    \"age_range\": \"24-30\",\n    \"preferences\": {\n      \"drink\": \"奶茶\",\n      \"food\": \"海龟汤\",\n      \"hobbies\": \"海龟汤\"\n    },\n    \"location\": \"北京\",\n    \"dislikes\": [\n      \"奶茶\"\n    ],\n    \"relationship_dynamic\": \"互有好感\",\n    \"relationship_status\": \"职场搭子\",\n    \"family_status\": {\n      \"mother\": \"deceased\",\n      \"father\": \"deceased\"\n    },\n    \"occupation\": \"殡葬师\",\n    \"pets\": [\n      {\n        \"color\": \"black\",\n        \"type\": \"cat\",\n        \"status\": \"deceased\"\n      }\n    ]\n  },\n  \"location\": \"北京\",\n  \"relationship_dynamic\": \"互有好感\",\n  \"relationship_status\": \"职场搭子\"\n}",
+  "relationshipEvolution": "{\n  \"relationship_evolution\": \"心照不宣的专属树洞\"\n}",
+  "lastUpdated": 1768481157934
+}

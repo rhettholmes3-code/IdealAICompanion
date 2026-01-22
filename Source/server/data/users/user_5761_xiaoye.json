@@ -1,0 +1,7 @@
+{
+  "userId": "user_5761",
+  "agentId": "xiaoye",
+  "targetUser": "{\n  \"last_updated\": \"2026-01-16 18:31:23\",\n  \"user_profile\": {\n    \"age_range\": \"24-30\",\n    \"current_situation\": \"安全\",\n    \"location\": \"未知\",\n    \"sensory_input\": {\n      \"breathing\": \"正常\",\n      \"smell\": \"无\"\n    }\n  },\n  \"sensory_input\": {\n    \"breathing\": \"正常\",\n    \"smell\": \"无\"\n  }\n}",
+  "relationshipEvolution": "{\n  \"memory\": {\n    \"last_updated\": \"2026-01-16 17:21:30\",\n    \"user_profile\": {\n      \"age_range\": \"24-30\",\n      \"current_situation\": \"安全\",\n      \"location\": \"未知\",\n      \"sensory_input\": {\n        \"breathing\": \"正常\",\n        \"smell\": \"无\"\n      }\n    },\n    \"preferences\": {\n      \"hobbies\": [\n        \"玩海龟汤\",\n        \"烧脑游戏\",\n        \"互动式聊天\"\n      ],\n      \"dislikes\": [\n        \"对话被中断或忽略\",\n        \"单向输出\"\n      ]\n    }\n  },\n  \"relationship_evolution\": \"互有好感的职场搭子\"\n}",
+  "lastUpdated": 1768559486133
+}

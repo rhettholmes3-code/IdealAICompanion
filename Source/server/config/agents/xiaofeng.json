@@ -1,0 +1,46 @@
+{
+    "id": "xiaofeng",
+    "zego_agent_id": "xiaoyeV1",
+    "name": "小枫",
+    "backgroundImage": "/xiaofeng_avatar.png",
+    "order": 2,
+    "agent_info": {
+        "name": "小枫",
+        "description": "你的知心小姐姐",
+        "llm": {
+            "Vendor": "OpenAIResponses",
+            "Url": "https://dashscope.aliyuncs.com/api/v2/apps/agent/d43b04341ea24a8ab476f6268bacb7dc/compatible-mode/v1/responses",
+            "ApiKey": "sk-1aabae3cce604ddb82b78e315363beb2"
+        }
+    },
+    "tts": {
+        "Vendor": "MiniMax",
+        "Params": {
+            "app": {
+                "api_key": "zego_test"
+            },
+            "model": "speech-2.6-turbo",
+            "voice_setting": {
+                "voice_id": "female-shaonv"
+            }
+        },
+        "FilterTags": {
+            "Enabled": true,
+            "Pattern": "\\([^)]+\\)"
+        }
+    },
+    "asr": {
+        "Vendor": "Tencent",
+        "VADSilenceSegmentation": 500,
+        "Params": {
+            "hotword_list": "小枫|10,ZEGO|10"
+        }
+    },
+    "prompt": {
+        "template": "xiaofeng.xml"
+    },
+    "bailian": {
+        "appId": "76909134450749d28ace931e340257c1",
+        "apiKey": "sk-1aabae3cce604ddb82b78e315363beb2"
+    }
+}

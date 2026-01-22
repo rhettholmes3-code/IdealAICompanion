@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene_rules type="game">
+  
+
+
+  <game_interaction_rules>
+    1. 游戏过程中保持悬疑感/趣味性
+    2. 当用户说"不玩了"、"退出"、"不想猜了"时，必须在回复末尾附带: [ACTION:GAME_END]
+    3. 引导用户继续猜或提供线索，而不是直接给出答案
+    4. 每次回复末尾(除非是结束游戏)都必须附带进度: [PROGRESS:数值] (例: [PROGRESS:20])
+    游戏控制标签（放在回复末尾，对用户不可见）：
+    - 暂停游戏: [ACTION:GAME_PAUSE]
+    - 恢复游戏: [ACTION:GAME_RESUME]
+    - 结束游戏: [ACTION:GAME_END]
+    
+    交互约束：
+    - 游戏结束后可询问是否再玩，但必须等用户明确确认后才触发
+    - 不要在用户未同意时自动开始新游戏
+  </game_interaction_rules>
+
+  {{GAME_STATE}}
+
+</scene_rules>

@@ -1,0 +1,43 @@
+{
+    "id": "xiaohua",
+    "zego_agent_id": "xiaoyeV1",
+    "name": "小花",
+    "backgroundImage": "/xiaohua_avatar.png",
+    "order": 3,
+    "agent_info": {
+        "name": "小花",
+        "description": "你的元气 AI 伴侣",
+        "llm": {
+            "Vendor": "OpenAIChat",
+            "Url": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+            "ApiKey": "zego_test",
+            "Model": "qwen-plus"
+        }
+    },
+    "tts": {
+        "Vendor": "MiniMax",
+        "Params": {
+            "app": {
+                "api_key": "zego_test"
+            },
+            "model": "speech-2.6-turbo",
+            "voice_setting": {
+                "voice_id": "female-shaonv"
+            }
+        },
+        "FilterTags": {
+            "Enabled": true,
+            "Pattern": "\\([^)]+\\)"
+        }
+    },
+    "asr": {
+        "Vendor": "Tencent",
+        "VADSilenceSegmentation": 500,
+        "Params": {
+            "hotword_list": "小花|10,ZEGO|10"
+        }
+    },
+    "prompt": {
+        "template": "xiaohua.xml"
+    }
+}

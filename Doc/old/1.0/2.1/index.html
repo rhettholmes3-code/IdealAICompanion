@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=390, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>海龟汤 v2.1 - 高保真原型</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#38BDF8',
+                        'primary-dark': '#0284C7',
+                        'bg-dark': '#0F172A',
+                        'bg-mid': '#1E293B',
+                        'glass-white': 'rgba(255, 255, 255, 0.08)',
+                        'glass-border': 'rgba(255, 255, 255, 0.12)',
+                    },
+                    fontFamily: {
+                        'sans': ['Noto Sans SC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #0F172A;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        /* 毛玻璃效果 */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-button {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* 背景渐变 */
+        .bg-gradient-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(15, 23, 42, 0.6) 0%,
+                    transparent 25%,
+                    transparent 55%,
+                    rgba(15, 23, 42, 0.95) 100%);
+            pointer-events: none;
+        }
+
+        /* 状态指示灯动画 */
+        @keyframes status-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .status-dot {
+            animation: status-pulse 1.5s ease-in-out infinite;
+        }
+
+        /* 消息进入动画 */
+        @keyframes message-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-animate {
+            animation: message-in 0.3s ease;
+        }
+
+        /* 打字光标 */
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .typing-cursor {
+            animation: blink 0.8s step-end infinite;
+        }
+
+        /* 挂断按钮光晕 */
+        .hangup-glow::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: #EF4444;
+            opacity: 0.3;
+            filter: blur(12px);
+        }
+
+        /* 音浪动画 */
+        @keyframes wave1 {
+
+            0%,
+            100% {
+                height: 4px;
+            }
+
+            50% {
+                height: 32px;
+            }
+        }
+
+        @keyframes wave2 {
+
+            0%,
+            100% {
+                height: 6px;
+            }
+
+            50% {
+                height: 44px;
+            }
+        }
+
+        @keyframes wave3 {
+
+            0%,
+            100% {
+                height: 4px;
+            }
+
+            50% {
+                height: 28px;
+            }
+        }
+
+        @keyframes wave4 {
+
+            0%,
+            100% {
+                height: 8px;
+            }
+
+            50% {
+                height: 48px;
+            }
+        }
+
+        @keyframes wave5 {
+
+            0%,
+            100% {
+                height: 4px;
+            }
+
+            50% {
+                height: 36px;
+            }
+        }
+
+        @keyframes wave6 {
+
+            0%,
+            100% {
+                height: 6px;
+            }
+
+            50% {
+                height: 42px;
+            }
+        }
+
+        @keyframes wave7 {
+
+            0%,
+            100% {
+                height: 4px;
+            }
+
+            50% {
+                height: 24px;
+            }
+        }
+
+        @keyframes wave8 {
+
+            0%,
+            100% {
+                height: 8px;
+            }
+
+            50% {
+                height: 40px;
+            }
+        }
+
+        .waveform.active .wave-bar:nth-child(1) {
+            animation: wave1 0.8s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(2) {
+            animation: wave2 0.7s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(3) {
+            animation: wave3 0.9s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(4) {
+            animation: wave4 0.6s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(5) {
+            animation: wave5 0.85s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(6) {
+            animation: wave6 0.75s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(7) {
+            animation: wave7 0.95s ease-in-out infinite;
+        }
+
+        .waveform.active .wave-bar:nth-child(8) {
+            animation: wave8 0.65s ease-in-out infinite;
+        }
+
+        /* 密文模糊效果 */
+        .cipher-text {
+            filter: blur(4px);
+            user-select: none;
+            transition: filter 0.5s ease, opacity 0.3s ease;
+        }
+
+        /* 解锁动画 */
+        @keyframes unlock-flash {
+            0% {
+                filter: blur(4px);
+                opacity: 0.5;
+            }
+
+            30% {
+                filter: blur(0);
+                opacity: 1;
+                text-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
+            }
+
+            100% {
+                filter: blur(0);
+                opacity: 1;
+                text-shadow: none;
+            }
+        }
+
+        .clue-unlocking {
+            animation: unlock-flash 0.8s ease forwards;
+        }
+
+        /* 进度条动画 */
+        .progress-bar-fill {
+            transition: width 0.5s ease-out;
+        }
+
+        /* 卡片展开/折叠动画 */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .collapsible-content.expanded {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        /* 游戏卡片醒目边框 */
+        .game-card-highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1));
+            border: 1.5px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15),
+                0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card-highlight::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.2));
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.6;
+        }
+
+        /* 滚动区域隐藏滚动条 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 遮罩渐变 */
+        .mask-gradient {
+            mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 100%);
+        }
+
+        /* Toast 提示 */
+        .toast {
+            transform: translateX(-50%) translateY(-100px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 主容器 -->
+    <div class="w-full max-w-[390px] h-[100dvh] bg-bg-dark relative overflow-hidden">
+
+        <!-- 背景图 -->
+        <div class="absolute inset-0 bg-cover bg-center bg-gradient-overlay z-0"
+            style="background-image: url('xiaoye_avatar.png');">
+        </div>
+
+        <!-- 顶部导航栏 -->
+        <header class="flex justify-between items-center pt-12 px-4 pb-3 relative z-20">
+            <!-- 左侧：亲密度 + 情绪 -->
+            <div class="flex items-center gap-2">
+                <!-- 亲密度徽章 -->
+                <div class="glass-panel rounded-2xl px-3 py-1.5 flex items-center gap-1.5">
+                    <span class="text-sm">🌿</span>
+                    <span class="text-xs font-medium">Lv.2 熟悉</span>
+                </div>
+                <!-- 情绪标签 -->
+                <div class="glass-panel rounded-2xl px-3 py-1.5 flex items-center gap-1">
+                    <span class="text-sm">😏</span>
+                    <span class="text-xs font-medium">得意</span>
+                </div>
+            </div>
+
+            <!-- 右侧：功能按钮 -->
+            <div class="flex items-center gap-2">
+                <button
+                    class="glass-button w-10 h-10 rounded-full flex items-center justify-center active:scale-95 transition-transform"
+                    onclick="showToast('剪贴板功能开发中...')">
+                    <i class="fa-regular fa-clipboard text-white/80"></i>
+                </button>
+                <button
+                    class="glass-button w-10 h-10 rounded-full flex items-center justify-center active:scale-95 transition-transform"
+                    onclick="showToast('更多功能开发中...')">
+                    <i class="fa-solid fa-ellipsis text-white/80"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 状态区 -->
+        <div class="text-center px-4 py-2 relative z-20">
+            <h1 class="text-lg font-semibold drop-shadow-lg">小叶</h1>
+            <div class="inline-flex items-center gap-1.5 text-xs text-white/70 mt-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 status-dot"></span>
+                <span id="agentStatusText">说话中</span>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- 🎮 v2.1 核心模块：游戏信息卡片（可折叠）     -->
+        <!-- ============================================ -->
+        <div class="mx-4 mb-2 relative z-20" id="gameCard">
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-xl game-card-highlight relative">
+                <!-- 卡片头部（始终可见）-->
+                <div class="px-3 py-2 flex items-center justify-between cursor-pointer select-none"
+                    onclick="toggleGameCard()">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🐢</span>
+                        <div>
+                            <h3 class="text-sm font-semibold text-emerald-300">海龟汤：半夜敲门</h3>
+                            <p class="text-[10px] text-white/50">推理游戏进行中</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- 进度指示 -->
+                        <span class="text-sm font-semibold text-emerald-400" id="progressText">33%</span>
+                        <!-- 展开/折叠图标 -->
+                        <i class="fa-solid fa-chevron-down text-emerald-400/60 text-xs transition-transform duration-300"
+                            id="expandIcon"></i>
+                    </div>
+                </div>
+
+                <!-- 可折叠内容 -->
+                <div class="collapsible-content expanded" id="cardContent">
+                    <!-- 分割线 -->
+                    <div class="h-px bg-white/10 mx-3"></div>
+
+                    <!-- 汤面区域（完整展示） -->
+                    <div class="px-3 py-2">
+                        <div class="flex items-center gap-1.5 mb-1">
+                            <span class="text-[11px] font-medium text-white/50">📜 汤面</span>
+                        </div>
+                        <p class="text-[13px] text-white/85 leading-relaxed" id="storyContent">
+                            一个人住在山顶的小屋里，半夜听见有人敲门，他去开门，却没有人，但第二天发现门外躺着一具尸体...
+                        </p>
+                    </div>
+
+                    <!-- 线索墙（更紧凑） -->
+                    <div class="px-3 py-2">
+                        <div class="flex items-center gap-1.5 mb-1.5">
+                            <span class="text-[11px] font-medium text-white/50">🔍 线索墙</span>
+                            <span class="text-[10px] text-white/30" id="progressLabel">1/3 已解锁</span>
+                        </div>
+
+                        <!-- 线索列表（紧凑布局） -->
+                        <div class="space-y-1.5" id="clueList">
+                            <!-- 线索1: 已解锁 -->
+                            <div class="flex items-center gap-2 py-1.5 px-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 clue-item"
+                                data-index="0" data-unlocked="true">
+                                <span class="text-sm">✅</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-white/50 leading-tight">线索 1：门的特点</p>
+                                    <p class="text-[13px] font-medium text-emerald-400" id="clueText0">向外开</p>
+                                </div>
+                            </div>
+
+                            <!-- 线索2: 未解锁 -->
+                            <div class="flex items-center gap-2 py-1.5 px-2 rounded-lg bg-white/5 border border-white/10 clue-item cursor-pointer hover:bg-white/10 transition-colors"
+                                data-index="1" data-unlocked="false" onclick="tryUnlock(1)">
+                                <span class="text-sm">🔒</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-white/50 leading-tight">线索 2：推门结果</p>
+                                    <p class="text-[13px] text-white/60 cipher-text" id="clueText1">推门把人推下悬崖</p>
+                                </div>
+                            </div>
+
+                            <!-- 线索3: 未解锁 -->
+                            <div class="flex items-center gap-2 py-1.5 px-2 rounded-lg bg-white/5 border border-white/10 clue-item cursor-pointer hover:bg-white/10 transition-colors"
+                                data-index="2" data-unlocked="false" onclick="tryUnlock(2)">
+                                <span class="text-sm">🔒</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-white/50 leading-tight">线索 3：敲门人身份</p>
+                                    <p class="text-[13px] text-white/60 cipher-text" id="clueText2">敲门的是来求救的人</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 聊天区域 -->
+        <div class="flex-1 px-3.5 overflow-y-auto hide-scrollbar mask-gradient relative z-20" id="chatArea"
+            style="height: calc(100dvh - 420px);">
+            <div class="flex flex-col justify-end min-h-full pt-4 space-y-2.5" id="messagesWrapper">
+
+                <!-- AI 消息 -->
+                <div class="flex justify-start pr-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed max-w-[85%]
+                                bg-bg-mid/85 backdrop-blur border border-glass-border text-white/90">
+                        好呀，今天想听什么类型的海龟汤呀～？
+                    </div>
+                </div>
+
+                <!-- 用户消息 -->
+                <div class="flex justify-end pl-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-br-sm text-sm leading-relaxed max-w-[85%]
+                                bg-gradient-to-r from-blue-500 to-blue-400 text-white">
+                        来一个经典的吧！
+                    </div>
+                </div>
+
+                <!-- AI 消息 -->
+                <div class="flex justify-start pr-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed max-w-[85%]
+                                bg-bg-mid/85 backdrop-blur border border-glass-border text-white/90">
+                        好的，来听这道《半夜敲门》～ 一个人住在山顶的小屋里，半夜听见有人敲门，他去开门却没有人，第二天发现门外躺着一具尸体... 开始推理吧！🐢
+                    </div>
+                </div>
+
+                <!-- 用户消息 -->
+                <div class="flex justify-end pl-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-br-sm text-sm leading-relaxed max-w-[85%]
+                                bg-gradient-to-r from-blue-500 to-blue-400 text-white">
+                        门是往里开的吗？
+                    </div>
+                </div>
+
+                <!-- AI 消息 -->
+                <div class="flex justify-start pr-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed max-w-[85%]
+                                bg-bg-mid/85 backdrop-blur border border-glass-border text-white/90">
+                        <span class="text-emerald-400 font-medium">不是</span>～门不是往里开的哦！这是个很关键的线索呢，恭喜你解锁了第一个线索！🎉
+                    </div>
+                </div>
+
+                <!-- 用户消息 -->
+                <div class="flex justify-end pl-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-br-sm text-sm leading-relaxed max-w-[85%]
+                                bg-gradient-to-r from-blue-500 to-blue-400 text-white">
+                        那死者是被门撞死的？
+                    </div>
+                </div>
+
+                <!-- AI 消息（正在输入） -->
+                <div class="flex justify-start pr-10 message-animate">
+                    <div class="px-3.5 py-2.5 rounded-2xl rounded-bl-sm text-sm leading-relaxed max-w-[85%]
+                                bg-bg-mid/85 backdrop-blur border border-glass-border text-white/90">
+                        <span class="text-amber-400 font-medium">接近了</span>～方向对了，但还不够准确
+                        <span class="typing-cursor inline-block w-0.5 h-3.5 bg-primary ml-0.5 align-middle"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 音浪区域 -->
+        <div class="flex items-center justify-center h-14 gap-0.5 px-4 relative z-20 waveform active" id="waveform">
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+            <div class="wave-bar w-0.5 h-0.5 rounded-full bg-gradient-to-t from-blue-400 to-purple-400"></div>
+        </div>
+
+        <!-- 底部控制区 -->
+        <div class="flex justify-center items-center gap-10 px-4 pt-3 pb-10 relative z-20">
+            <!-- 麦克风按钮 -->
+            <div class="flex flex-col items-center gap-1.5">
+                <button class="w-13 h-13 rounded-full flex items-center justify-center transition-all active:scale-95
+                               glass-button" id="micBtn" onclick="toggleMic()">
+                    <i class="fa-solid fa-microphone text-white text-lg" id="micIcon"></i>
+                </button>
+                <span class="text-[9px] text-white/50 uppercase tracking-wider" id="micLabel">麦克风</span>
+            </div>
+
+            <!-- 挂断按钮 -->
+            <div class="flex flex-col items-center gap-1.5">
+                <button
+                    class="w-15 h-15 rounded-full flex items-center justify-center relative
+                               bg-gradient-to-br from-red-500 to-red-600 hangup-glow active:scale-95 transition-transform"
+                    onclick="showToast('通话已结束')">
+                    <i class="fa-solid fa-phone-slash text-white text-xl relative z-10"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast 提示 -->
+        <div class="toast fixed top-14 left-1/2 bg-black/80 backdrop-blur-xl px-4 py-2.5 rounded-xl flex items-center gap-2 text-sm z-50 opacity-0"
+            id="toast">
+            <i class="fa-solid fa-circle-info text-blue-400"></i>
+            <span id="toastText">提示信息</span>
+        </div>
+
+    </div>
+
+    <script>
+        // ==================== 状态管理 ====================
+        let gameState = {
+            isCardExpanded: true,
+            progress: 33,
+            unlockedClues: [true, false, false],
+            clueTexts: ['向外开', '推门把人推下悬崖', '敲门的是来求救的人'],
+            isMicMuted: false
+        };
+
+        // ==================== 卡片折叠/展开 ====================
+        function toggleGameCard() {
+            const content = document.getElementById('cardContent');
+            const icon = document.getElementById('expandIcon');
+
+            gameState.isCardExpanded = !gameState.isCardExpanded;
+
+            if (gameState.isCardExpanded) {
+                content.classList.add('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.remove('expanded');
+                icon.style.transform = 'rotate(-90deg)';
+            }
+
+            // 重新计算聊天区域高度
+            updateChatAreaHeight();
+        }
+
+        function updateChatAreaHeight() {
+            const chatArea = document.getElementById('chatArea');
+            const gameCard = document.getElementById('gameCard');
+            const cardHeight = gameCard.offsetHeight;
+
+            // 动态调整聊天区高度
+            chatArea.style.height = `calc(100dvh - ${cardHeight + 200}px)`;
+        }
+
+        // ==================== 解锁线索 ====================
+        function tryUnlock(index) {
+            if (gameState.unlockedClues[index]) return;
+
+            // 模拟解锁
+            unlockClue(index);
+        }
+
+        function unlockClue(index) {
+            const clueItem = document.querySelector(`.clue-item[data-index="${index}"]`);
+            const clueText = document.getElementById(`clueText${index}`);
+            const clueIcon = clueItem.querySelector('.text-lg');
+
+            // 标记为已解锁
+            gameState.unlockedClues[index] = true;
+            clueItem.setAttribute('data-unlocked', 'true');
+
+            // 更新样式
+            clueItem.className = 'flex items-center gap-3 p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 clue-item';
+            clueIcon.textContent = '✅';
+
+            // 播放解锁动画
+            clueText.classList.remove('cipher-text');
+            clueText.classList.add('clue-unlocking');
+            clueText.classList.add('text-emerald-400');
+
+            // 更新进度
+            updateProgress();
+
+            // 显示提示
+            showToast(`🎉 解锁线索 ${index + 1}：${gameState.clueTexts[index]}`);
+        }
+
+        function updateProgress() {
+            const unlockedCount = gameState.unlockedClues.filter(Boolean).length;
+            const total = gameState.unlockedClues.length;
+            const percentage = Math.round((unlockedCount / total) * 100);
+
+            gameState.progress = percentage;
+
+            // 更新 UI
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${percentage}%`;
+            document.getElementById('progressLabel').textContent = `${unlockedCount}/${total} 线索已解锁`;
+        }
+
+        // ==================== 复制线索 ====================
+        function copyClue(index) {
+            if (!gameState.unlockedClues[index]) return;
+
+            const text = gameState.clueTexts[index];
+
+            // 模拟复制到剪贴板
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            }
+
+            showToast(`📋 已复制：${text}`);
+        }
+
+        // ==================== 麦克风控制 ====================
+        function toggleMic() {
+            gameState.isMicMuted = !gameState.isMicMuted;
+
+            const btn = document.getElementById('micBtn');
+            const icon = document.getElementById('micIcon');
+            const label = document.getElementById('micLabel');
+            const waveform = document.getElementById('waveform');
+
+            if (gameState.isMicMuted) {
+                btn.classList.add('bg-red-500/20', 'border-red-500/50');
+                icon.classList.remove('fa-microphone');
+                icon.classList.add('fa-microphone-slash', 'text-red-400');
+                label.textContent = '已静音';
+                waveform.classList.remove('active');
+            } else {
+                btn.classList.remove('bg-red-500/20', 'border-red-500/50');
+                icon.classList.add('fa-microphone');
+                icon.classList.remove('fa-microphone-slash', 'text-red-400');
+                label.textContent = '麦克风';
+                waveform.classList.add('active');
+            }
+        }
+
+        // ==================== Toast 提示 ====================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+
+            toastText.textContent = message;
+            toast.classList.add('show');
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.opacity = '0';
+            }, 2500);
+        }
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // 滚动到聊天底部
+            const chatArea = document.getElementById('chatArea');
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // 初始化高度
+            updateChatAreaHeight();
+        });
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', updateChatAreaHeight);
+    </script>
+
+</body>
+
+</html>
